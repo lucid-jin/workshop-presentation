@@ -813,6 +813,7 @@
     let currentProgress = 0;
     let isShuffleMode = false;
     let playedTracks = [];
+    let audioElement = null;
 
     // 드래그 관련 변수
     let isDragging = false;
@@ -822,11 +823,11 @@
     let playerStartY = 0;
 
     const playlist = [
-        { name: "Uptown Funk", artist: "Bruno Mars ft. Mark Ronson", duration: "4:30", durationSeconds: 270 },
-        { name: "Happy", artist: "Pharrell Williams", duration: "3:53", durationSeconds: 233 },
-        { name: "Can't Stop the Feeling!", artist: "Justin Timberlake", duration: "3:56", durationSeconds: 236 },
-        { name: "Good 4 U", artist: "Olivia Rodrigo", duration: "2:58", durationSeconds: 178 },
-        { name: "Levitating", artist: "Dua Lipa", duration: "3:23", durationSeconds: 203 }
+        { name: "Uptown Funk", artist: "Bruno Mars ft. Mark Ronson", duration: "4:30", durationSeconds: 270, file: "assets/music/uptown-funk.mp3" },
+        { name: "Happy", artist: "Pharrell Williams", duration: "3:53", durationSeconds: 233, file: "assets/music/happy.mp3" },
+        { name: "Can't Stop the Feeling!", artist: "Justin Timberlake", duration: "3:56", durationSeconds: 236, file: "assets/music/cant-stop-feeling.mp3" },
+        { name: "Good 4 U", artist: "Olivia Rodrigo", duration: "2:58", durationSeconds: 178, file: "assets/music/good-4-u.mp3" },
+        { name: "Levitating", artist: "Dua Lipa", duration: "3:23", durationSeconds: 203, file: "assets/music/levitating.mp3" }
     ];
 
     document.getElementById('totalSlides').textContent = totalSlides;
@@ -967,8 +968,84 @@
         updateCurrentTrack();
         updatePlaylistHighlight();
         resetProgress();
+
+        // 새 오디오 로드
+        loadAudio();
+
         if (isPlaying) {
-            startProgress();
+            playAudio();
+        }
+    }
+
+    function loadAudio() {
+        const track = playlist[currentTrackIndex];
+
+        // 기존 오디오 정리
+        if (audioElement) {
+            audioElement.pause();
+            audioElement.removeEventListener('loadedmetadata', updateDuration);
+            audioElement.removeEventListener('timeupdate', updateProgress);
+            audioElement.removeEventListener('ended', onTrackEnded);
+        }
+
+        // 새 오디오 생성
+        audioElement = new Audio();
+        audioElement.src = track.file;
+        audioElement.volume = document.getElementById('volumeSlider').value / 100;
+
+        // 이벤트 리스너 추가
+        audioElement.addEventListener('loadedmetadata', updateDuration);
+        audioElement.addEventListener('timeupdate', updateProgress);
+        audioElement.addEventListener('ended', onTrackEnded);
+        audioElement.addEventListener('error', onAudioError);
+    }
+
+    function updateDuration() {
+        // 실제 오디오 길이로 업데이트
+        if (audioElement && audioElement.duration) {
+            playlist[currentTrackIndex].durationSeconds = audioElement.duration;
+        }
+    }
+
+    function updateProgress() {
+        if (audioElement && audioElement.duration) {
+            const progress = (audioElement.currentTime / audioElement.duration) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            currentProgress = progress;
+        }
+    }
+
+    function onTrackEnded() {
+        if (isShuffleMode) {
+            playRandomTrack();
+        } else {
+            nextTrack();
+        }
+    }
+
+    function onAudioError() {
+        console.log('오디오 로드 실패:', playlist[currentTrackIndex].name);
+        // 다음 곡으로 자동 이동
+        setTimeout(() => {
+            if (isShuffleMode) {
+                playRandomTrack();
+            } else {
+                nextTrack();
+            }
+        }, 1000);
+    }
+
+    function playAudio() {
+        if (audioElement) {
+            audioElement.play().catch(e => {
+                console.log('재생 실패:', e);
+            });
+        }
+    }
+
+    function pauseAudio() {
+        if (audioElement) {
+            audioElement.pause();
         }
     }
 
@@ -995,14 +1072,21 @@
         if (isPlaying) {
             playBtn.textContent = '⏸';
             playBtn.title = '일시정지';
-            startProgress();
+
+            // 오디오가 로드되지 않았으면 로드
+            if (!audioElement) {
+                loadAudio();
+            }
+
+            playAudio();
+
             if (currentTrackIndex === 0 && currentProgress === 0) {
                 updateCurrentTrack();
             }
         } else {
             playBtn.textContent = '▶';
             playBtn.title = '재생';
-            stopProgress();
+            pauseAudio();
         }
     }
 
@@ -1105,8 +1189,11 @@
     function changeVolume() {
         const volume = document.getElementById('volumeSlider').value;
         document.getElementById('volumeDisplay').textContent = volume + '%';
-        // 실제 오디오 볼륨 조절은 여기서 구현
-        console.log('볼륨 변경:', volume + '%');
+
+        // 실제 오디오 볼륨 조절
+        if (audioElement) {
+            audioElement.volume = volume / 100;
+        }
     }
 
     // 키보드 네비게이션
