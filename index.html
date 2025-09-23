@@ -297,6 +297,52 @@
             display: none;
         }
 
+        /* 전체화면 모드 */
+        .fullscreen-mode .navigation {
+            display: none;
+        }
+
+        .fullscreen-mode .slide-counter {
+            display: none;
+        }
+
+        .fullscreen-mode .slide {
+            width: 100%;
+            height: 100vh;
+            max-width: none;
+            padding: 60px;
+            border-radius: 0;
+        }
+
+        .fullscreen-mode .presentation-container {
+            padding: 0;
+        }
+
+        /* 전체화면 힌트 */
+        .fullscreen-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        .fullscreen-hint.show {
+            opacity: 1;
+        }
+
+        .fullscreen-mode .fullscreen-hint {
+            display: block;
+        }
+
         /* 반응형 디자인 */
         @media (max-width: 768px) {
             .teams-grid {
@@ -542,6 +588,10 @@
     <button class="nav-btn" onclick="previousSlide()">◀ 이전</button>
     <button class="nav-btn" onclick="nextSlide()">다음 ▶</button>
     <button class="nav-btn" onclick="toggleFullscreen()">전체화면</button>
+</div>
+
+<div class="fullscreen-hint" id="fullscreenHint">
+    방향키 또는 ESC로 나가기 | 스페이스바로 다음 슬라이드
 </div>
 
 <script>
