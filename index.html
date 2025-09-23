@@ -46,7 +46,7 @@
         }
 
         .slide h1 {
-            font-size: 3.5em;
+            font-size: 4em;
             margin-bottom: 30px;
             text-align: center;
             background: linear-gradient(45deg, #FFD700, #FFA500);
@@ -57,7 +57,7 @@
         }
 
         .slide h2 {
-            font-size: 2.5em;
+            font-size: 3em;
             margin-bottom: 30px;
             text-align: center;
             color: #FFD700;
@@ -65,7 +65,7 @@
         }
 
         .slide h3 {
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 20px;
             color: #87CEEB;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
@@ -92,7 +92,7 @@
         }
 
         .team-name {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #FFD700;
             margin-bottom: 10px;
@@ -100,7 +100,7 @@
         }
 
         .team-members {
-            font-size: 0.9em;
+            font-size: 1.1em;
             line-height: 1.4;
             text-align: center;
         }
@@ -125,13 +125,13 @@
         .time {
             font-weight: bold;
             color: #FFD700;
-            font-size: 1.2em;
+            font-size: 1.4em;
         }
 
         .activity {
             flex: 1;
             margin-left: 20px;
-            font-size: 1.1em;
+            font-size: 1.3em;
         }
 
         .game-list {
@@ -144,12 +144,13 @@
         .game-card {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.1em;
         }
 
         .game-title {
-            font-size: 1.4em;
+            font-size: 1.6em;
             color: #FFD700;
             margin-bottom: 10px;
             font-weight: bold;
@@ -159,6 +160,7 @@
             color: #87CEEB;
             font-weight: bold;
             margin-bottom: 10px;
+            font-size: 1.1em;
         }
 
         .navigation {
@@ -175,10 +177,10 @@
             background: rgba(255, 255, 255, 0.2);
             border: none;
             border-radius: 10px;
-            padding: 15px 25px;
+            padding: 18px 30px;
             color: white;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.2em;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -195,9 +197,10 @@
             right: 30px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.2em;
         }
 
         .emoji {
@@ -215,7 +218,7 @@
 
         .center-text {
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.5em;
             line-height: 1.6;
         }
 
@@ -229,9 +232,69 @@
         .material-item {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 10px;
-            padding: 15px;
+            padding: 18px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.1em;
+        }
+
+        .material-item.blurred {
+            filter: blur(8px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .material-item.blurred:hover {
+            filter: blur(4px);
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .material-item.blurred::after {
+            content: "🔒 클릭해서 공개";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .material-item.blurred:hover::after {
+            opacity: 1;
+        }
+
+        .reveal-materials-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .reveal-materials-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .reveal-materials-btn.hidden {
+            display: none;
         }
 
         /* 반응형 디자인 */
@@ -265,8 +328,8 @@
     <div class="slide active">
         <h1>🎉 레크레이션 행사 🎉</h1>
         <div class="center-text">
-            <p style="font-size: 1.8em; margin-bottom: 30px;">팀워크와 소통을 위한 즐거운 시간</p>
-            <p style="font-size: 1.2em; opacity: 0.9;">모든 팀원이 함께하는 특별한 하루</p>
+            <p style="font-size: 2.2em; margin-bottom: 30px;">팀워크와 소통을 위한 즐거운 시간</p>
+            <p style="font-size: 1.5em; opacity: 0.9;">모든 팀원이 함께하는 특별한 하루</p>
         </div>
     </div>
 
@@ -374,13 +437,14 @@
             </div>
         </div>
         <h3>📋 준비물</h3>
-        <div class="materials-list">
-            <div class="material-item">스케치북 10개 + 펜</div>
-            <div class="material-item">색종이 30개</div>
-            <div class="material-item">A4용지, 신문지</div>
-            <div class="material-item">노트북 + HDMI</div>
-            <div class="material-item">스피커</div>
-            <div class="material-item">타이머</div>
+        <button class="reveal-materials-btn" onclick="revealMaterials()">🎁 준비물 공개하기</button>
+        <div class="materials-list" id="materialsList">
+            <div class="material-item blurred" onclick="revealMaterial(this)">스케치북 10개 + 펜</div>
+            <div class="material-item blurred" onclick="revealMaterial(this)">색종이 30개</div>
+            <div class="material-item blurred" onclick="revealMaterial(this)">A4용지, 신문지</div>
+            <div class="material-item blurred" onclick="revealMaterial(this)">노트북 + HDMI</div>
+            <div class="material-item blurred" onclick="revealMaterial(this)">스피커</div>
+            <div class="material-item blurred" onclick="revealMaterial(this)">타이머</div>
         </div>
     </div>
 
@@ -448,14 +512,14 @@
         <h2>🏆 시상 및 마무리</h2>
         <div class="center-text">
             <h3 style="color: #FFD700; margin-bottom: 30px;">🥇 우승팀 특전</h3>
-            <p style="font-size: 1.4em; margin-bottom: 20px;">코어밸류 응모함 우선 추첨권!</p>
+            <p style="font-size: 1.6em; margin-bottom: 20px;">코어밸류 응모함 우선 추첨권!</p>
 
             <h3 style="color: #87CEEB; margin: 40px 0 30px 0;">🎁 경품 추첨</h3>
-            <p style="font-size: 1.2em; margin-bottom: 20px;">모든 참가자 대상</p>
-            <p style="font-size: 1.2em; margin-bottom: 40px;">다양한 경품이 기다리고 있어요!</p>
+            <p style="font-size: 1.4em; margin-bottom: 20px;">모든 참가자 대상</p>
+            <p style="font-size: 1.4em; margin-bottom: 40px;">다양한 경품이 기다리고 있어요!</p>
 
             <h3 style="color: #98FB98; margin: 40px 0 20px 0;">🍽️ 회식</h3>
-            <p style="font-size: 1.3em;">오후 7시부터 즐거운 회식 시간!</p>
+            <p style="font-size: 1.5em;">오후 7시부터 즐거운 회식 시간!</p>
         </div>
     </div>
 
@@ -463,9 +527,9 @@
     <div class="slide">
         <h1>🎊 함께 만드는 즐거운 추억 🎊</h1>
         <div class="center-text">
-            <p style="font-size: 2em; margin-bottom: 40px;">모든 팀원의 적극적인 참여를</p>
-            <p style="font-size: 2em; margin-bottom: 40px; color: #FFD700;">부탁드립니다!</p>
-            <p style="font-size: 1.5em; opacity: 0.9;">오늘 하루 즐거운 시간 되세요! 🌟</p>
+            <p style="font-size: 2.4em; margin-bottom: 40px;">모든 팀원의 적극적인 참여를</p>
+            <p style="font-size: 2.4em; margin-bottom: 40px; color: #FFD700;">부탁드립니다!</p>
+            <p style="font-size: 1.8em; opacity: 0.9;">오늘 하루 즐거운 시간 되세요! 🌟</p>
         </div>
     </div>
 </div>
@@ -528,12 +592,40 @@
         }
     });
 
+    // 준비물 공개 기능
+    function revealMaterial(element) {
+        element.classList.remove('blurred');
+        element.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+        }, 200);
+    }
+
+    function revealMaterials() {
+        const materials = document.querySelectorAll('.material-item.blurred');
+        const button = document.querySelector('.reveal-materials-btn');
+
+        materials.forEach((material, index) => {
+            setTimeout(() => {
+                material.classList.remove('blurred');
+                material.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    material.style.transform = 'scale(1)';
+                }, 200);
+            }, index * 150);
+        });
+
+        setTimeout(() => {
+            button.classList.add('hidden');
+        }, materials.length * 150 + 500);
+    }
+
     // 자동 슬라이드 기능 (클릭하면 멈춤)
     let autoSlide = setInterval(nextSlide, 15000);
 
     document.addEventListener('click', function(e) {
-        // 네비게이션 클릭은 자동 슬라이드를 멈추지 않음
-        if (!e.target.closest('.navigation')) {
+        // 네비게이션이나 준비물 관련 클릭은 자동 슬라이드를 멈추지 않음
+        if (!e.target.closest('.navigation') && !e.target.closest('.reveal-materials-btn') && !e.target.closest('.material-item')) {
             clearInterval(autoSlide);
         }
     });
