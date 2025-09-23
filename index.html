@@ -545,38 +545,38 @@
         <div class="playlist" id="playlist">
             <div class="playlist-item active" onclick="selectTrack(0)">
                 <div class="track-info">
-                    <div class="track-name">Sunny Day</div>
-                    <div class="track-artist">Royalty Free Music</div>
+                    <div class="track-name">Happy</div>
+                    <div class="track-artist">Pharrell Williams</div>
                 </div>
-                <div class="track-duration">3:45</div>
+                <div class="track-duration">3:53</div>
             </div>
             <div class="playlist-item" onclick="selectTrack(1)">
                 <div class="track-info">
-                    <div class="track-name">Upbeat Pop</div>
-                    <div class="track-artist">Free Music Archive</div>
+                    <div class="track-name">Good 4 U</div>
+                    <div class="track-artist">Olivia Rodrigo</div>
                 </div>
-                <div class="track-duration">4:12</div>
+                <div class="track-duration">2:58</div>
             </div>
             <div class="playlist-item" onclick="selectTrack(2)">
                 <div class="track-info">
-                    <div class="track-name">Feel Good Vibes</div>
-                    <div class="track-artist">Jamendo Music</div>
+                    <div class="track-name">Uptown Funk</div>
+                    <div class="track-artist">Bruno Mars ft. Mark Ronson</div>
                 </div>
-                <div class="track-duration">3:28</div>
+                <div class="track-duration">4:30</div>
             </div>
             <div class="playlist-item" onclick="selectTrack(3)">
                 <div class="track-info">
-                    <div class="track-name">Happy Energy</div>
-                    <div class="track-artist">Pixabay Music</div>
+                    <div class="track-name">Can't Stop the Feeling!</div>
+                    <div class="track-artist">Justin Timberlake</div>
                 </div>
                 <div class="track-duration">3:56</div>
             </div>
             <div class="playlist-item" onclick="selectTrack(4)">
                 <div class="track-info">
-                    <div class="track-name">Positive Flow</div>
-                    <div class="track-artist">Creative Commons</div>
+                    <div class="track-name">Levitating</div>
+                    <div class="track-artist">Dua Lipa</div>
                 </div>
-                <div class="track-duration">4:05</div>
+                <div class="track-duration">3:23</div>
             </div>
         </div>
     </div>
@@ -823,11 +823,11 @@
     let playerStartY = 0;
 
     const playlist = [
-        { name: "Sunny Day", artist: "Royalty Free Music", duration: "3:45", durationSeconds: 225, file: "assets/music/sunny-day.mp3" },
-        { name: "Upbeat Pop", artist: "Free Music Archive", duration: "4:12", durationSeconds: 252, file: "assets/music/upbeat-pop.mp3" },
-        { name: "Feel Good Vibes", artist: "Jamendo Music", duration: "3:28", durationSeconds: 208, file: "assets/music/feel-good-vibes.mp3" },
-        { name: "Happy Energy", artist: "Pixabay Music", duration: "3:56", durationSeconds: 236, file: "assets/music/happy-energy.mp3" },
-        { name: "Positive Flow", artist: "Creative Commons", duration: "4:05", durationSeconds: 245, file: "assets/music/positive-flow.mp3" }
+        { name: "Happy", artist: "Pharrell Williams", duration: "3:53", durationSeconds: 233, youtubeId: "ZbZSe6N_BXs" },
+        { name: "Good 4 U", artist: "Olivia Rodrigo", duration: "2:58", durationSeconds: 178, youtubeId: "gNi_6U5Pm_o" },
+        { name: "Uptown Funk", artist: "Bruno Mars ft. Mark Ronson", duration: "4:30", durationSeconds: 270, youtubeId: "OPf0YbXqDm0" },
+        { name: "Can't Stop the Feeling!", artist: "Justin Timberlake", duration: "3:56", durationSeconds: 236, youtubeId: "ru0K8uYEZWw" },
+        { name: "Levitating", artist: "Dua Lipa", duration: "3:23", durationSeconds: 203, youtubeId: "TUVcZfQe-Kw" }
     ];
 
     document.getElementById('totalSlides').textContent = totalSlides;
@@ -978,41 +978,17 @@
     }
 
     function loadAudio() {
-        const track = playlist[currentTrackIndex];
-
-        // 기존 오디오 정리
-        if (audioElement) {
-            audioElement.pause();
-            audioElement.removeEventListener('loadedmetadata', updateDuration);
-            audioElement.removeEventListener('timeupdate', updateProgress);
-            audioElement.removeEventListener('ended', onTrackEnded);
-        }
-
-        // 새 오디오 생성
-        audioElement = new Audio();
-        audioElement.src = track.file;
-        audioElement.volume = document.getElementById('volumeSlider').value / 100;
-
-        // 이벤트 리스너 추가
-        audioElement.addEventListener('loadedmetadata', updateDuration);
-        audioElement.addEventListener('timeupdate', updateProgress);
-        audioElement.addEventListener('ended', onTrackEnded);
-        audioElement.addEventListener('error', onAudioError);
+        // YouTube 링크로 직접 이동하는 방식으로 변경
+        console.log('YouTube 트랙 선택:', playlist[currentTrackIndex].name);
     }
 
     function updateDuration() {
-        // 실제 오디오 길이로 업데이트
-        if (audioElement && audioElement.duration) {
-            playlist[currentTrackIndex].durationSeconds = audioElement.duration;
-        }
+        // YouTube 플레이어는 실제 길이를 미리 설정된 값으로 사용
     }
 
     function updateProgress() {
-        if (audioElement && audioElement.duration) {
-            const progress = (audioElement.currentTime / audioElement.duration) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            currentProgress = progress;
-        }
+        // 시뮬레이션된 진행 상태 (실제 YouTube 재생과는 독립적)
+        // 실제 진행 상황은 startProgress에서 처리됨
     }
 
     function onTrackEnded() {
@@ -1024,8 +1000,7 @@
     }
 
     function onAudioError() {
-        console.log('오디오 로드 실패:', playlist[currentTrackIndex].name);
-        // 다음 곡으로 자동 이동
+        console.log('YouTube 링크 오류:', playlist[currentTrackIndex].name);
         setTimeout(() => {
             if (isShuffleMode) {
                 playRandomTrack();
@@ -1036,17 +1011,21 @@
     }
 
     function playAudio() {
-        if (audioElement) {
-            audioElement.play().catch(e => {
-                console.log('재생 실패:', e);
-            });
+        const track = playlist[currentTrackIndex];
+        const youtubeUrl = `https://www.youtube.com/watch?v=${track.youtubeId}`;
+
+        // 새 탭에서 YouTube 링크 열기
+        window.open(youtubeUrl, '_blank', 'noopener,noreferrer');
+
+        // 진행 바 시작
+        if (isPlaying) {
+            startProgress();
         }
     }
 
     function pauseAudio() {
-        if (audioElement) {
-            audioElement.pause();
-        }
+        // YouTube는 외부에서 제어할 수 없으므로 진행 바만 정지
+        stopProgress();
     }
 
     function updateCurrentTrack() {
