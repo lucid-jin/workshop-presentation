@@ -15,7 +15,7 @@ const teamsData = [
     {
         id: 'team3',
         name: '조 3. 따듯한 팀워크',
-        members: ['김소엽', '채재민', '이나은', '박석류', '황수영'],
+        members: ['김기욱', '채재민', '이나은', '박석류', '황수영'],
         image: './assets/team3.jpg' // team3.jpg 파일을 assets 폴더에 넣으세요
     },
     {
@@ -33,7 +33,7 @@ const teamsData = [
     {
         id: 'team6',
         name: '조 6. 주도적인 태도',
-        members: ['티모시', '한세희', '방은선', '김가람', '유예지'],
+        members: ['티모시', '한세희', '방은영', '김가람', '유예지'],
         image: './assets/team6.jpg' // team6.jpg 파일을 assets 폴더에 넣으세요
     }
 ];
